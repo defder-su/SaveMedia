@@ -79,4 +79,4 @@ Done.
 
 ## Contact:
 
-See: [Defder.SU](https://defder.su).
+Visit: [Defder.SU](https://defder.su).

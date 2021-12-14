@@ -21,4 +21,4 @@ First, make sure that all dependencies are installed and your PATH is configured
 * `yt-dlp --version`
 * `ffmpeg --version`
 
-If all of the above commands execute correctly, download the latest [release](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts/releases) and follow the "Usage" section of this README.
+If all of the above commands execute correctly, follow the "Usage" section of this README.
