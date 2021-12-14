@@ -1,10 +1,6 @@
-<h1 align="center">TheFrenchGhosty's Ultimate YouTube-DL Scripts Collection</h1>
+<h1 align="center">SaveMedia</h1>
 
-<p align="center">The ultimate collection of scripts for YouTube-DL.</p>
-
-<p align="center">🎉 Thanks for 1000 stars! 🎉</p>
-
-Associated Reddit /r/Datahoarder post: [Here for 3.1.0](https://redd.it/lx3ccm) | [Here for 3.0.0](https://redd.it/llw7zq) | [Here for 2.0.0](https://redd.it/h7q4nz) | [Here for 1.0.0](https://redd.it/dwhvq6).
+<p align="center">The collection of scripts for yt-dlp.</p>
 
 ## Features:
 
@@ -13,8 +9,6 @@ Associated Reddit /r/Datahoarder post: [Here for 3.1.0](https://redd.it/lx3ccm) 
 - Download all kind of content: channels, playlists and individual videos
 - Download audio only content, in the best possible quality
 - Content separated in two to be easier to archive
-- Dedicated scripts to download videos destined to be watched and deleted on a PC
-- Dedicated scripts to download videos destined to be watched and deleted on a Mobile device
 - Easily expandable for users familiar with yt-dlp / youtube-dl
 - [SponsorBlock](https://sponsor.ajay.app/) integration using [mpv_sponsorblock](https://github.com/po5/mpv_sponsorblock) by [@po5](https://github.com/po5)
 - [Jellyfin](https://jellyfin.org/) integration using [Jellyfin YouTube Metadata Plugin](https://github.com/ankenyr/jellyfin-youtube-metadata-plugin) by [@ankenyr](https://github.com/ankenyr)
@@ -36,8 +30,6 @@ Monero (XMR): [44yL1VNsRmvW3khxHAQvzr9mfyfkMLFmS5xo3EehkQRgcBSgAUcoqf4Cj9mTyCwEP
 ## Installation (Linux):
 
 Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install [atomicparsley](https://github.com/wez/atomicparsley), it's required for embedding thumbnails into m4a files).
-
-Download the latest [release](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts/releases) and follow the included ReadMe, do not use the `master` branch unless you are ready to re-download EVERYTHING.
 
 ---
 
@@ -71,9 +63,9 @@ Done.
 
 ## Basics:
 
-- Scripts Type (Archivist, Audio...): [Here](docs/Scripts-Type.md)
+- Scripts Type (Archivist, Audio): [Here](docs/Scripts-Type.md)
 
-- Content Type (Channels, Playlists, Unique...): [Here](docs/Content-Type.md)
+- Content Type (Channels, Playlists, Unique): [Here](docs/Content-Type.md)
 
 ## Advanced:
 
@@ -87,6 +79,4 @@ Done.
 
 ## Contact:
 
-If you want to get in touch with me, or other users of my projects, feel free to join the Matrix room of one of my other project [PussTheCat.org](https://pussthecat.org): [#pussthecat.org:pussthecat.org](https://matrix.to/#/#pussthecat.org:pussthecat.org).
-
-If you want to contact me privately, see: https://pussthecat.org/about/.
+See: [Defder.SU](https://defder.su).
