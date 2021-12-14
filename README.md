@@ -57,11 +57,11 @@ Downloaded videos will likely exceed Windows' 260-character path length limit an
 
 Create a folder where you want your videos downloaded in a drive where you have enough space available.
 
-Put the folders `Archivist Scripts`, `Audio-Only Scripts` and `Watch Scripts` in the created folder (See the documentation to understand the differences).
+Put the folders `Archivist` and `Audio` in the created folder (See the documentation to understand the differences).
 
 Add content to a 'Source - XXXXXX.txt' file depending of what type of content you want to download (See the documentation to understand the differences).
 
-Open a terminal in the folder of the script you want to use and run `./[SCRIPT].sh`.
+Open a terminal in the folder of the script you want to use and run `./save.sh`.
 
 Done.
 
@@ -71,7 +71,7 @@ Done.
 
 ## Basics:
 
-- Scripts Type (Archivist, Audio-Only, Watch...): [Here](docs/Scripts-Type.md)
+- Scripts Type (Archivist, Audio...): [Here](docs/Scripts-Type.md)
 
 - Content Type (Channels, Playlists, Unique...): [Here](docs/Content-Type.md)
 

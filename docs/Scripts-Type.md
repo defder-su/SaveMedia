@@ -4,8 +4,6 @@
 
 **Audio-Only Script**: Script made to download audio-only content (or that will extract the audio from videos that contain it) in the best possible quality.
 
-**Watch Scripts**: Scripts made to download content that is made to be watched and deleted, only download the videos, without metadata.
-
 ---
 
 ### Archivist Scripts:
@@ -16,24 +14,10 @@ Considering that I chose to separate the content:
 
 **Archivist Scripts**: Scripts that will download everything that was created before the current date, minus 30 days. For example, if the current date is 2021-01-30, everything created **before** 2021-01-01 will be downloaded. This is needed because YouTube takes time to transcode videos (usually 1 week but sometimes more, the script assume it will take a maximum of 1 month).
 
-**Archivist Scripts (No Comments)**: Same as the Archivists Scripts, but comments aren't downloaded.
-
 **Recent Scripts**: Scripts that will download everything that was created the current date, minus 30 days. For example, if the current date is 2021-01-30, everything created **after** 2021-01-01 will be downloaded, it won't necessarily download the best possible quality since YouTube sometimes takes days to weeks to process videos, however it's useful to have in case videos get takedown by YouTube or their author in the first month.
-
----
-
-### Watch on PC Scripts:
-
-**Watch Script**: Script that will download individual videos made by a creator that are not meant to be archived but deleted after being watched, in modern video and audio format that are not always supported by mobile devices. (naming scheme: `Uploader - 20201231 - Title [VIDEOID].ext`).
-
-**Watch on Mobile Devices Script**: Script that will download individual videos made by a creator that are not meant to be archived but deleted after being watched, in ancient video and audio format that are supported by every mobile devices. (naming scheme: `Uploader - 20201231 - Title [VIDEOID].ext`).
-
-Consider the "Watch Scripts" and "Watch on Mobile Devices Script" useful for downloading "throwaway" videos. Data normally useful for archivists, such as the thumbnail, are omitted.
 
 ---
 
 ### Audio-Only Scripts:
 
 **Channels / Playlists / Unique**: Same as "Archivist Scripts (No Comments)", but for Audio-Only content.
-
-**Listen**: Same as "Watch on PC Scripts", but for Audio-Only content.
