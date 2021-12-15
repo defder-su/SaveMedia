@@ -5,7 +5,7 @@
 ## Features:
 
 - [Copylefted libre software](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts) (AGPLv3+ licensed)
-- Download content in the best possible quality, better than every other software, period.
+- Download content in the best possible quality with comments, better than every other software, period.
 - Download all kind of content: channels, playlists and individual videos
 - Download audio only content, in the best possible quality
 - Content separated in two to be easier to archive
@@ -27,7 +27,7 @@ Monero (XMR): [44yL1VNsRmvW3khxHAQvzr9mfyfkMLFmS5xo3EehkQRgcBSgAUcoqf4Cj9mTyCwEP
 
 ---
 
-## Installation (Linux):
+## Installation (Linux, macOS):
 
 Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install [atomicparsley](https://github.com/wez/atomicparsley), it's required for embedding thumbnails into m4a files).
 
