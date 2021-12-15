@@ -1,4 +1,4 @@
-## Archivist Scripts? Audio-Only Scripts? Watch Scripts?
+## Archivist Scripts? Audio-Only Scripts?
 
 **Archivists Scripts**: Scripts made for data archivists/data hoarder: The scripts to use if you want to save some specific content in the best possible quality along with every possible metadata.
 

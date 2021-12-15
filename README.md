@@ -51,7 +51,7 @@ Create a folder where you want your videos downloaded in a drive where you have 
 
 Put the folders `Archivist` and `Audio` in the created folder (See the documentation to understand the differences).
 
-Add content to a 'Source - XXXXXX.txt' file depending of what type of content you want to download (See the documentation to understand the differences).
+Add content to a 'Source - XXXXXX.txt' (or 'Audio - XXXXXX.txt') file depending of what type of content you want to download (See the documentation to understand the differences).
 
 Open a terminal in the folder of the script you want to use and run `./save.sh`.
 
