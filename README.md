@@ -2,7 +2,10 @@
 
 <p align="center">The collection of scripts for yt-dlp.</p>
 
-Based on [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts), this project focuses on archiving. Removed the watch scripts, added downloading comments everything (it doesn't require much disk space), added downloading all subtitles (it's usable to search media by text). The recent scripts uses same sources as the archivist scripts.
+Based on [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts), this project focuses on archiving.
+
+Removed the watch scripts, added downloading comments everything (it doesn't require much disk space), added downloading all subtitles (it's usable to search media by text).
+The recent scripts uses same sources as the archivist scripts.
 
 ## Features:
 
