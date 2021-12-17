@@ -23,6 +23,7 @@ The recent scripts uses same sources as the archivist scripts.
 
 Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install [atomicparsley](https://github.com/wez/atomicparsley), it's required for embedding thumbnails into m4a files).
 
+---
 
 ## Installation (Windows):
 
@@ -61,6 +62,18 @@ Done.
 - Region Restriction: [Here](docs/Region-Restriction.md)
 
 - Details: [Here](docs/Details.md) 
+
+---
+
+## Related Projects:
+
+- [RatBrowser](https://ratbrowser.com)
+
+- [SaveSites](https://github.com/defder-su/SaveSites)
+
+- [IPFS](https://ipfs.io)
+
+- [ZeroNet](https://zeronet.io)
 
 ---
 
