@@ -80,4 +80,4 @@ Done.
 
 ## Contact:
 
-Visit: [Defder.SU](https://defder.su).
+You are welcome in [Defder.SU](https://defder.su).
