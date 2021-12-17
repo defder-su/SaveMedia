@@ -23,7 +23,6 @@ The recent scripts uses same sources as the archivist scripts.
 
 Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install [atomicparsley](https://github.com/wez/atomicparsley), it's required for embedding thumbnails into m4a files).
 
----
 
 ## Installation (Windows):
 
@@ -51,15 +50,11 @@ Done.
 
 ---
 
-# Documentation:
-
-## Basics:
+## Documentation:
 
 - Scripts Type (Archivist, Audio): [Here](docs/Scripts-Type.md)
 
 - Content Type (Channels, Playlists, Unique): [Here](docs/Content-Type.md)
-
-## Advanced:
 
 - SponsorBlock implementation: [Here](docs/SponsorBlock.md)
 
