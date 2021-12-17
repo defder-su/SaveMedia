@@ -14,4 +14,4 @@ However the setup process does necessitate a relatively large one-time download 
 ### Required Software
 Follow the "Manual Install" instructions in the [Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10). 
 
-Once WSL is installed, follow the "Installation (Linux)" section of this README.
+Once WSL is installed, follow the "Installation (Linux, macOS)" section of this README.
