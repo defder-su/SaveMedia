@@ -20,4 +20,4 @@ Considering that I chose to separate the content:
 
 ### Audio-Only Scripts:
 
-**Channels / Playlists / Unique**: Same as "Archivist Scripts (No Comments)", but for Audio-Only content.
+**Channels / Playlists / Unique**: Same as "Archivist Scripts", but for Audio-Only content.
