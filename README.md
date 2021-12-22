@@ -1,6 +1,6 @@
 <h1 align="center">SaveMedia</h1>
 
-<p align="center">The collection of scripts for `yt-dlp`.</p>
+<p align="center">The collection of scripts for yt-dlp.</p>
 
 Based on [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts), this project focuses on archiving.
 
