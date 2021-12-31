@@ -46,7 +46,7 @@ Put the folders `Channels`, `Playlists`, `Unique` and `Audio` in the created fol
 
 Add content to a 'Source - XXXXXX.txt' (or 'Audio - XXXXXX.txt') file depending of what type of content you want to download (See the documentation to understand the differences).
 
-Open a terminal in the folder of the script you want to use and run `./save` or `./save_recent`.
+Open a terminal in the folder of the script you want to use and run `./save` or `./save_recent`. Also, there is `./save_all` available.
 
 Done.
 
