@@ -1,0 +1,26 @@
+# Audio
+cd Audio
+cd Unique
+./save
+cd ..
+cd Playlists
+./save
+cd ..
+cd Channels
+./save
+cd ..
+cd ..
+
+# Archivist
+cd Unique
+./save
+./save_recent
+cd ..
+cd Playlists
+./save
+./save_recent
+cd ..
+cd Channels
+./save
+./save_recent
+cd ..
