@@ -28,3 +28,5 @@ cd Channels
 ./save
 ./save_recent
 cd ..
+
+echo "Done"

@@ -2,3 +2,12 @@
 #
 
 yt-dlp --format "(bestaudio[acodec^=opus]/bestaudio)/best" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --get-comments --write-sub --write-auto-sub --sleep-subtitles 1 --all-subs --extract-audio --match-filter "!is_live & !live" --output "%(title)s - %(uploader)s - %(upload_date)s/%(title)s - %(uploader)s - %(upload_date)s [%(id)s].%(ext)s" --no-check-certificate --throttled-rate 100K --batch-file "Audio - Unique.txt" 2>&1 | tee output.log
+
+if [ $? -eq 0 ]
+then
+    for d in */ ; do
+    	cd "$d"
+	zip -9 -T -m subtitles.zip *.vtt
+	cd ..
+    done
+fi
