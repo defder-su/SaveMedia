@@ -7,7 +7,10 @@ if [ $? -eq 0 ]
 then
     for d in */ ; do
     	cd "$d"
-	zip -9 -T -m subtitles.zip *.vtt
-	cd ..
+	VTTS=$(ls *.vtt 2> /dev/null | wc -l)
+	if [ "$VTTS" -gt 0 ]; then
+    	    zip -9 -T -m subtitles.zip *.vtt
+	fi
+    	cd ..
     done
 fi
