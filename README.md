@@ -52,6 +52,12 @@ Done.
 
 ---
 
+## Known issues: 
+
+- Downloads videos from [Vimeo](https://vimeo.com) in minimal quality.
+
+---
+
 ## Documentation:
 
 - Scripts Type (Archivist, Audio): [Here](docs/Scripts-Type.md)
