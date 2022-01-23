@@ -56,7 +56,7 @@ Done.
 
 - Save video pages (they may contain additional information such as tags).
 
-- Merge updates from [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts).
+- Merge updates (Jan 2022) from [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts).
 
 ---
 
