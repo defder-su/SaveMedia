@@ -54,6 +54,8 @@ Done.
 
 ## TODO: 
 
+- Use `media` folder for the media lists and output.
+
 - Adjust file names.
 
 - Save video pages (they may contain additional information such as tags).
