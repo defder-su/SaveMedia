@@ -22,7 +22,7 @@ The recent scripts uses same sources as the archivist scripts.
 
 ## Installation (Linux, macOS):
 
-Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install [atomicparsley](https://github.com/wez/atomicparsley), it's required for embedding thumbnails into m4a files).
+Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install the others [yt-dlp dependencies](https://github.com/yt-dlp/yt-dlp#dependencies)).
 
 ---
 
@@ -54,9 +54,9 @@ Done.
 
 ## TODO: 
 
-- Save video pages (they may contain additional information such as tags).
+- Adjust file names.
 
-- Merge updates (Jan 2022) from [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts).
+- Save video pages (they may contain additional information such as tags).
 
 ---
 
