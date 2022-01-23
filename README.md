@@ -52,9 +52,9 @@ Done.
 
 ---
 
-## Known issues: 
+## TODO: 
 
-- Downloads videos from [Vimeo](https://vimeo.com) in minimal quality.
+- Save video pages (they may contain additional information such as tags).
 
 ---
 
