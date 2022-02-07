@@ -58,7 +58,7 @@ Done.
 
 - Adjust file names.
 
-- Save video pages (they may contain additional information such as tags).
+- [Save video pages](https://github.com/yt-dlp/yt-dlp/issues/2460) (they may contain additional information such as tags).
 
 ---
 
