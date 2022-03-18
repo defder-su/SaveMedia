@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 
-yt-dlp --format "(bestaudio[acodec^=opus]/bestaudio)/best" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-playlist-metafiles --write-url-link --get-comments --write-sub --write-auto-sub --sleep-subtitles 5 --sub-langs "en,en.*,ru,ru.*,de,de.*" --extract-audio --match-filter "!is_live & !live" --output "%(title)s - %(uploader)s - %(upload_date)s/%(title)s - %(uploader)s - %(upload_date)s [%(id)s].%(ext)s" --no-check-certificate --throttled-rate 100K --batch-file "Audio - Unique.txt" 2>&1 | tee output.log
+yt-dlp --format "(bestaudio[acodec^=opus]/bestaudio)/best" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-playlist-metafiles --write-url-link --get-comments --write-sub --write-auto-sub --sleep-subtitles 5 --sub-langs "en,en.*,ru,ru.*,de,de.*" --extract-audio --match-filter "!is_live & !live" --output "%(title)s - %(uploader)s - %(upload_date)s/%(title)s - %(uploader)s - %(upload_date)s [%(id)s].%(ext)s" --no-check-certificate --throttled-rate 50K --batch-file "Audio - Unique.txt" 2>&1 | tee output.log
 
 if false #[ $? -eq 0 ]
 then
