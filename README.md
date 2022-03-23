@@ -42,9 +42,9 @@ Downloaded videos will likely exceed Windows' 260-character path length limit an
 
 Create a folder where you want your videos downloaded in a drive where you have enough space available.
 
-Put the folders `Channels`, `Playlists`, `Unique` and `Audio` in the created folder (See the documentation to understand the differences).
+Put the folders `Channels`, `Playlists`, `Unique` and also `Audio` and `Preview` in the created folder (See the documentation to understand the differences).
 
-Add content to a 'Source - XXXXXX.txt' (or 'Audio - XXXXXX.txt') file depending of what type of content you want to download (See the documentation to understand the differences).
+Add content to a 'Source - XXXXXX.txt', 'Audio - XXXXXX.txt' or 'Preview - XXXXXX.txt' file depending of what type of content you want to download (See the documentation to understand the differences).
 
 Open a terminal in the folder of the script you want to use and run `./save` or `./save_recent`. Also, there is `./save_all` available.
 
@@ -66,7 +66,7 @@ Done.
 
 ## Documentation:
 
-- Scripts Type (Archivist, Audio): [Here](docs/Scripts-Type.md)
+- Scripts Type (Archivist, Audio, Preview): [Here](docs/Scripts-Type.md)
 
 - Content Type (Channels, Playlists, Unique): [Here](docs/Content-Type.md)
 
@@ -88,10 +88,10 @@ Done.
 
 - [IPFS](https://ipfs.io)
 
-- [ZeroNet](https://zeronet.io)
+- [ZeroNet](https://zeronet.dev)
 
 ---
 
 ## Contact:
 
-You are welcome in [Defder.SU](https://defder.su).
+You are welcome in [Defder.info](https://defder.info).
