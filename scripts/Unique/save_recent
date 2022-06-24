@@ -29,4 +29,6 @@ then
 	cd ..
     done
 fi
+CMDDIR="$(cd "$(dirname "$0")" && pwd)"
+"$CMDDIR/../write_html"
 cd ..

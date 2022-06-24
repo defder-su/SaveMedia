@@ -15,4 +15,5 @@ then
 fi
 
 CMDDIR="$(cd "$(dirname "$0")" && pwd)"
+"$CMDDIR/../write_html"
 "$CMDDIR/save_recent"

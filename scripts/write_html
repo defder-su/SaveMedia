@@ -1,0 +1,29 @@
+#!/bin/sh
+
+wget_url() {
+	FN1="$1"
+	URL=""
+	while IFS='= ' read var val
+	do
+		if [[ $var == \[*] ]]
+		then
+			section=$var
+		elif [[ $val ]]
+		then
+			URL="$val"
+			break
+		fi
+	done < "$FN1"
+	if [[ $URL != "" ]]
+	then
+		FN2="${FN1%.url}.html"
+		if [ ! -e "$FN2" ]
+		then
+			echo "[html] Sleeping 10.0 seconds ..."
+			sleep 10
+			wget $URL --output-document="$FN2"
+		fi
+	fi
+}
+
+find . -name "*.url" | xargs -L1 wget_url
