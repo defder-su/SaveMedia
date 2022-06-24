@@ -14,3 +14,6 @@ then
 	cd ..
     done
 fi
+
+CMDDIR="$(cd "$(dirname "$0")" && pwd)"
+"$CMDDIR/save_recent"
