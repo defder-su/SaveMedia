@@ -35,5 +35,5 @@ fi
 
 for I in $(find . -name "*.url")
 do
-	wget_url $I
+	wget_url "$I"
 done
