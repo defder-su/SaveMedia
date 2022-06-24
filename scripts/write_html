@@ -26,4 +26,14 @@ wget_url() {
 	fi
 }
 
-find . -name "*.url" | xargs -L1 wget_url
+type -P wget &>/dev/null && ISINST=1 || ISINST=0
+if [ $ISINST -eq 0 ]
+then
+	>&2 echo "Error: can't write html because of wget is not installed"
+	return 127
+fi
+
+for I in $(find . -name "*.url")
+do
+	wget_url $I
+done
