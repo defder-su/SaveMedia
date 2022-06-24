@@ -33,4 +33,8 @@ then
 	return 127
 fi
 
-IFS=$'\n'; for I in `find . -name "*.url"`; do; wget_url "$I"; done
+IFS=$'\n'
+for I in `find . -name "*.url"`
+do
+	wget_url "$I"
+done
