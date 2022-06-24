@@ -33,7 +33,8 @@ then
 	return 127
 fi
 
-for I in $(find . -name "*.url")
+FILES=$(find . -name "*.url")
+for I in ${FILES[@]}
 do
 	wget_url "$I"
 done
