@@ -33,8 +33,4 @@ then
 	return 127
 fi
 
-FILES=$(find . -name "*.url")
-for I in ${FILES[@]}
-do
-	wget_url "$I"
-done
+IFS=$'\n'; for I in `find . -name "*.url"`; do; wget_url "$I"; done
