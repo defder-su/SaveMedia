@@ -18,15 +18,12 @@ cd ..
 # Archivist
 cd Unique
 ./save
-./save_recent
 cd ..
 cd Playlists
 ./save
-./save_recent
 cd ..
 cd Channels
 ./save
-./save_recent
 cd ..
 
 echo "Done"
