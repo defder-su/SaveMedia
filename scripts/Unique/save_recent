@@ -2,6 +2,7 @@
 #
 
 CMDDIR="$(cd "$(dirname "$0")" && pwd)"
+
 if [ ! -d "Recent" ]; then
 	mkdir Recent
 	if [ ! -d "Recent" ]; then
