@@ -22,7 +22,7 @@ The recent scripts uses same sources as the archivist scripts.
 
 ## Installation (Linux, macOS):
 
-Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install the others [yt-dlp dependencies](https://github.com/yt-dlp/yt-dlp#dependencies)).
+Install [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://www.ffmpeg.org/) (optionally, install the others [yt-dlp dependencies](https://github.com/yt-dlp/yt-dlp#dependencies)). Install [wget](https://www.gnu.org/software/wget/).
 
 ---
 
