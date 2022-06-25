@@ -19,8 +19,9 @@ wget_url() {
 		FN2="${FN1%.url}.html"
 		if [ ! -e "$FN2" ]
 		then
-			echo "[html] Sleeping 10.0 seconds ..."
-			sleep 10
+			RNUMBER=$((RANDOM%10+1))
+			echo "[html] Sleeping $RNUMBER.0 seconds ..."
+			sleep $RNUMBER
 			wget $URL --output-document="$FN2"
 		fi
 	fi
