@@ -1,6 +1,8 @@
 #!/bin/sh
 #
 
+CMDDIR="$(cd "$(dirname "$0")" && pwd)"
+
 if [ ! -d "Recent" ]; then
 	mkdir Recent
 	if [ ! -d "Recent" ]; then
@@ -33,4 +35,5 @@ then
 	cd ..
     done
 fi
+"$CMDDIR/../write_html"
 cd ..

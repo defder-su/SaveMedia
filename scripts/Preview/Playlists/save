@@ -1,8 +1,9 @@
 #!/bin/sh
 #
 
-yt-dlp --format "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b" --format-sort "res~480" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-playlist-metafiles --write-url-link --get-comments --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*" --match-filter "!is_live & !live" --output "%(playlist)s - (%(uploader)s)/%(upload_date)s - %(title)s/%(upload_date)s - %(title)s [%(id)s].%(ext)s" --merge-output-format "mp4" --no-check-certificate --throttled-rate 50K --batch-file "Preview - Playlists.txt" 2>&1 | tee output.log
+CMDDIR="$(cd "$(dirname "$0")" && pwd)"
 
+yt-dlp --format "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b" --format-sort "res~480" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-playlist-metafiles --write-url-link --get-comments --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*" --match-filter "!is_live & !live" --output "%(playlist)s - (%(uploader)s)/%(upload_date)s - %(title)s/%(upload_date)s - %(title)s [%(id)s].%(ext)s" --merge-output-format "mp4" --no-check-certificate --throttled-rate 50K --batch-file "Preview - Playlists.txt" 2>&1 | tee output.log
 if false #[ $? -eq 0 ]
 then
     for c in */ ; do
@@ -18,3 +19,4 @@ then
 	cd ..
     done
 fi
+"$CMDDIR/../write_html"
