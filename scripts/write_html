@@ -24,7 +24,7 @@ wget_url() {
 			fi
 		fi
 		if [[ "$HASH" != "" ]]; then
-			$HASH=" $HASH"
+			HASH=" $HASH"
 		fi
 		FN2="${FN1%.url}$HASH.html"
 		if [ ! -e "$FN2" ]
