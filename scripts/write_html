@@ -7,11 +7,11 @@ wget_url() {
 	URL="${URL#URL=}"
 	if [[ $URL != "" ]]
 	then
-		local HASH=$(printf '%s' $URL | sha1sum 2>/dev/null | cut -d' ' -f1)
+		local HASH=$(printf '%s' "$URL" | sha1sum 2>/dev/null | cut -d' ' -f1)
 		if [[ "$HASH" == "" ]]; then
-			HASH=$(printf '%s' $URL | openssl sha1 -r 2>/dev/null | cut -d' ' -f1)
+			HASH=$(printf '%s' "$URL" | openssl sha1 -r 2>/dev/null | cut -d' ' -f1)
 			if [[ "$HASH" == "" ]]; then
-				HASH=$(printf '%s' $URL | shasum -a 1 2>/dev/null | cut -d' ' -f1)
+				HASH=$(printf '%s' "$URL" | shasum -a 1 2>/dev/null | cut -d' ' -f1)
 			fi
 		fi
 		if [[ "$HASH" != "" ]]; then
