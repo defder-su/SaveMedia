@@ -4,7 +4,7 @@
 FN="Source - Channels.txt"
 
 if [ ! -s "$FN" ]; then
-	echo "Sources should be specified in the '$FN' file in separated strings"
+	echo "Sources should be specified in the '$FN' file\n in separated strings"
 	exit
 fi
 
@@ -33,7 +33,7 @@ fi
 type -P miceweb &>/dev/null && ISINST=1 || ISINST=0
 if [ $ISINST -eq 1 ]
 then
-    miceweb save urls "Source - Channels.txt" --grep=^http
+    miceweb save urls "$FN" --grep=^http
 else
     >&2 echo "Error: miceweb is not installed (seeing https://github.com/Robotizing/MiceWeb/)"
 fi

@@ -4,7 +4,7 @@
 FN="Source - Unique.txt"
 
 if [ ! -s "$FN" ]; then
-	echo "Sources should be specified in the '$FN' file in separated strings"
+	echo "Sources should be specified in the '$FN' file\n in separated strings"
 	exit
 fi
 
