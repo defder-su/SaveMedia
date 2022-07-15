@@ -2,7 +2,7 @@
 
 wget_url() {
 	FN1="$1"
-	if ls "${FN1%.url}*.html"; then
+	if ls "${FN1%.url}*.html" 2>/dev/null; then
 	    return 1
 	fi
 	URL=$(cat "$FN1" | sed -n 2p)
