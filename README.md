@@ -93,6 +93,3 @@ Done.
 
 ---
 
-## Contact:
-
-You are welcome in [Defder.info](http://defder.name).
