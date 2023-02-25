@@ -10,7 +10,7 @@ fi
 
 CMDDIR="$(cd "$(dirname "$0")" && pwd)"
 FMT="bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b"
-FNT="%(uploader)s/%(title).104s - %(uploader).104s - %(upload_date)s/%(title).208s [%(id)s].%(ext)s"
+FNT="%(uploader)s/%(title).32s - %(uploader).104s - %(upload_date)s/%(title).208s [%(id)s].%(ext)s"
 yt-dlp --format "$FMT" --format-sort "res~480" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-playlist-metafiles --write-url-link --get-comments --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --match-filter "!is_live & !live" --output "$FNT" --merge-output-format "mp4" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output.log
 "$CMDDIR/../../write_html"
 
