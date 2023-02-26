@@ -2,7 +2,7 @@
 
 wget_url() {
 	FN1="$1"
-	if ls "${FN1%.url}*.html" 2>/dev/null; then
+	if ls "*.html" 2>/dev/null; then
 	    return 1
 	fi
 	URL=$(cat "$FN1" | sed -n 2p)
@@ -18,9 +18,10 @@ wget_url() {
 			fi
 		fi
 		if [[ "$HASH" != "" ]]; then
-			HASH=" $HASH"
+			FN2="$HASH.html"
+		else
+			FN2="${FN1%.url}.html"
 		fi
-		FN2="${FN1%.url}$HASH.html"
 		if [ ! -e "$FN2" ]
 		then
 			RNUMBER=$((RANDOM%9+2))
