@@ -2,7 +2,8 @@
 
 wget_url() {
 	FN1="$1"
-	if ls "*.html" 2>/dev/null; then
+	FD="$(dirname "$FN1")"
+	if ls "$FD/*.html" 2>/dev/null; then
 	    return 1
 	fi
 	URL=$(cat "$FN1" | sed -n 2p)
@@ -18,7 +19,7 @@ wget_url() {
 			fi
 		fi
 		if [[ "$HASH" != "" ]]; then
-			FN2="$HASH.html"
+			FN2="$FD/$HASH.html"
 		else
 			FN2="${FN1%.url}.html"
 		fi
