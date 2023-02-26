@@ -29,3 +29,14 @@ Temporary Items
 # Custom
 *.log
 *.bak
+
+# Downloaded content
+scripts/Unique/*/
+scripts/Channels/*/
+scripts/Playlists/*/
+scripts/Audio/Unique/*/
+scripts/Audio/Channels/*/
+scripts/Audio/Playlists/*/
+scripts/Preview/Unique/*/
+scripts/Preview/Channels/*/
+scripts/Preview/Playlists/*/
