@@ -21,7 +21,7 @@ if [ ! -d "Recent" ]; then
 fi
 cd Recent
 echo "Optimizing archive..."
-cat ../archive.log >> archive.log
+cat ../archive_media.log >> archive.log
 awk '!a[$0]++' archive.log > ~archive.log
 mv ~archive.log archive.log
 echo "Saving recent videos..."

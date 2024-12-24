@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+
+FN="Source - Channels.txt"
+
+if [ ! -s "$FN" ]; then
+	echo "Sources should be specified in the '$FN' file\n in separated strings"
+	exit
+fi
+
+DNT="%(uploader)s/%(title).32s - %(uploader).104s - %(upload_date)s"
+
+PERL_DATE=$(perl -e 'my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time - 30*86400); $year += 1900; $mon+= 1; printf ("%04d%02d%02d", $year, $mon, $mday)')
+
+FNTC="$DNT/%(title).208s [%(id)s].comments.%(ext)s"
+yt-dlp --skip-download --no-simulate --force-write-archive --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive_comments.log --write-info-json --write-comments --match-filter "!is_live & !live" --output "$FNTC" --datebefore "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output_comments.log
