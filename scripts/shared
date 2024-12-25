@@ -90,7 +90,7 @@ if [ ! -s "$FN" ]; then
 	exit
 fi
 
-PERL_DATE=$(perl -e 'my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time - 30*86400); $year += 1900; $mon+= 1; printf ("%04d%02d%02d", $year, $mon, $mday)')
+PERL_DATE=$(perl -e 'my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time - 30*86400); $year += 1900; $mon += 1; printf ("%04d%02d%02d", $year, $mon, $mday)')
 
 DNT="%(title).32s - %(uploader).104s - %(upload_date)s"
 
