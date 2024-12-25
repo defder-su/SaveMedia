@@ -1,0 +1,97 @@
+wget_url() {
+	FN1="$1"
+	FD="$(dirname "$FN1")"
+	if ls "$FD/*.html" 2>/dev/null; then
+	    return 1
+	fi
+	URL=$(cat "$FN1" | sed -n 2p)
+	URL="${URL//[$'\t\r\n']}"
+	URL="${URL#URL=}"
+	if [[ $URL != "" ]]
+	then
+		local HASH=$(printf '%s' "$URL" | sha1sum 2>/dev/null | cut -d' ' -f1)
+		if [[ "$HASH" == "" ]]; then
+			HASH=$(printf '%s' "$URL" | openssl sha1 -r 2>/dev/null | cut -d' ' -f1)
+			if [[ "$HASH" == "" ]]; then
+				HASH=$(printf '%s' "$URL" | shasum -a 1 2>/dev/null | cut -d' ' -f1)
+			fi
+		fi
+		if [[ "$HASH" != "" ]]; then
+			FN2="$FD/$HASH.html"
+		else
+			FN2="${FN1%.url}.html"
+		fi
+		if [ ! -e "$FN2" ]
+		then
+			RNUMBER=$((RANDOM%9+2))
+			echo "[html] Sleeping $RNUMBER seconds ..."
+			sleep $RNUMBER
+			wget "$URL" --output-document="$FN2"
+		fi
+	fi
+}
+
+write_html() {
+	type -P wget &>/dev/null && ISINST=1 || ISINST=0
+	if [ $ISINST -eq 0 ]
+	then
+		>&2 echo "Error: can't write html because of wget is not installed"
+		return 127
+	fi
+	echo ""
+	IFS=$'\n'
+	for I in `find . -name "*.url"`
+	do
+		wget_url "$I"
+	done
+}
+
+enter_recent() {
+	if [ ! -d "Recent" ]; then
+		mkdir Recent
+		if [ ! -d "Recent" ]; then
+			echo "Can't create Recent directory"
+			exit
+		else
+			echo "Created Recent directory"
+		fi
+	fi
+	cd Recent
+	echo "Optimizing archive..."
+	cat ../archive_media.log >> archive.log
+	awk '!a[$0]++' archive.log > ~archive.log
+	mv ~archive.log archive.log
+	echo "Saving recent videos..."
+}
+
+ytdlp_recent() {
+	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 2 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --write-playlist-metafiles --write-url-link --get-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --dateafter "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "../$FN" 2>&1 | tee output.log
+}
+
+ytdlp_media() {
+	if [ -f "archive.log" ]; then
+		if cat archive.log >> archive_media.log; then
+			cat archive.log >> archive_comments.log
+			rm archive.log
+		fi
+	fi
+	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive_media.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --write-playlist-metafiles --write-url-link --no-write-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --datebefore "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output_media.log
+}
+
+ytdlp_comments() {
+	yt-dlp --skip-download --no-simulate --force-write-archive --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive_comments.log --write-info-json --write-comments --match-filter "!is_live & !live" --output "$1" --datebefore "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output_comments.log
+}
+
+
+set -m
+
+if [ ! -s "$FN" ]; then
+	echo "Sources should be specified in the '$FN' file in separated strings"
+	exit
+fi
+
+PERL_DATE=$(perl -e 'my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time - 30*86400); $year += 1900; $mon+= 1; printf ("%04d%02d%02d", $year, $mon, $mday)')
+
+DNT="%(title).32s - %(uploader).104s - %(upload_date)s"
+
+FMTA="(bestvideo[vcodec^=av01][height>=4320][fps>30]/bestvideo[vcodec^=vp9.2][height>=4320][fps>30]/bestvideo[vcodec^=vp9][height>=4320][fps>30]/bestvideo[vcodec^=avc1][height>=4320][fps>30]/bestvideo[height>=4320][fps>30]/bestvideo[vcodec^=av01][height>=4320]/bestvideo[vcodec^=vp9.2][height>=4320]/bestvideo[vcodec^=vp9][height>=4320]/bestvideo[vcodec^=avc1][height>=4320]/bestvideo[height>=4320]/bestvideo[vcodec^=av01][height>=2880][fps>30]/bestvideo[vcodec^=vp9.2][height>=2880][fps>30]/bestvideo[vcodec^=vp9][height>=2880][fps>30]/bestvideo[vcodec^=avc1][height>=2880][fps>30]/bestvideo[height>=2880][fps>30]/bestvideo[vcodec^=av01][height>=2880]/bestvideo[vcodec^=vp9.2][height>=2880]/bestvideo[vcodec^=vp9][height>=2880]/bestvideo[vcodec^=avc1][height>=2880]/bestvideo[height>=2880]/bestvideo[vcodec^=av01][height>=2160][fps>30]/bestvideo[vcodec^=vp9.2][height>=2160][fps>30]/bestvideo[vcodec^=vp9][height>=2160][fps>30]/bestvideo[vcodec^=avc1][height>=2160][fps>30]/bestvideo[height>=2160][fps>30]/bestvideo[vcodec^=av01][height>=2160]/bestvideo[vcodec^=vp9.2][height>=2160]/bestvideo[vcodec^=vp9][height>=2160]/bestvideo[vcodec^=avc1][height>=2160]/bestvideo[height>=2160]/bestvideo[vcodec^=av01][height>=1440][fps>30]/bestvideo[vcodec^=vp9.2][height>=1440][fps>30]/bestvideo[vcodec^=vp9][height>=1440][fps>30]/bestvideo[vcodec^=avc1][height>=1440][fps>30]/bestvideo[height>=1440][fps>30]/bestvideo[vcodec^=av01][height>=1440]/bestvideo[vcodec^=vp9.2][height>=1440]/bestvideo[vcodec^=vp9][height>=1440]/bestvideo[vcodec^=avc1][height>=1440]/bestvideo[height>=1440]/bestvideo[vcodec^=av01][height>=1080][fps>30]/bestvideo[vcodec^=vp9.2][height>=1080][fps>30]/bestvideo[vcodec^=vp9][height>=1080][fps>30]/bestvideo[vcodec^=avc1][height>=1080][fps>30]/bestvideo[height>=1080][fps>30]/bestvideo[vcodec^=av01][height>=1080]/bestvideo[vcodec^=vp9.2][height>=1080]/bestvideo[vcodec^=vp9][height>=1080]/bestvideo[vcodec^=avc1][height>=1080]/bestvideo[height>=1080]/bestvideo[vcodec^=av01][height>=720][fps>30]/bestvideo[vcodec^=vp9.2][height>=720][fps>30]/bestvideo[vcodec^=vp9][height>=720][fps>30]/bestvideo[vcodec^=avc1][height>=720][fps>30]/bestvideo[height>=720][fps>30]/bestvideo[vcodec^=av01][height>=720]/bestvideo[vcodec^=vp9.2][height>=720]/bestvideo[vcodec^=vp9][height>=720]/bestvideo[vcodec^=avc1][height>=720]/bestvideo[height>=720]/bestvideo[vcodec^=av01][height>=480][fps>30]/bestvideo[vcodec^=vp9.2][height>=480][fps>30]/bestvideo[vcodec^=vp9][height>=480][fps>30]/bestvideo[vcodec^=avc1][height>=480][fps>30]/bestvideo[height>=480][fps>30]/bestvideo[vcodec^=av01][height>=480]/bestvideo[vcodec^=vp9.2][height>=480]/bestvideo[vcodec^=vp9][height>=480]/bestvideo[vcodec^=avc1][height>=480]/bestvideo[height>=480]/bestvideo[vcodec^=av01][height>=360][fps>30]/bestvideo[vcodec^=vp9.2][height>=360][fps>30]/bestvideo[vcodec^=vp9][height>=360][fps>30]/bestvideo[vcodec^=avc1][height>=360][fps>30]/bestvideo[height>=360][fps>30]/bestvideo[vcodec^=av01][height>=360]/bestvideo[vcodec^=vp9.2][height>=360]/bestvideo[vcodec^=vp9][height>=360]/bestvideo[vcodec^=avc1][height>=360]/bestvideo[height>=360]/bestvideo[vcodec^=avc1][height>=240][fps>30]/bestvideo[vcodec^=av01][height>=240][fps>30]/bestvideo[vcodec^=vp9.2][height>=240][fps>30]/bestvideo[vcodec^=vp9][height>=240][fps>30]/bestvideo[height>=240][fps>30]/bestvideo[vcodec^=avc1][height>=240]/bestvideo[vcodec^=av01][height>=240]/bestvideo[vcodec^=vp9.2][height>=240]/bestvideo[vcodec^=vp9][height>=240]/bestvideo[height>=240]/bestvideo[vcodec^=avc1][height>=144][fps>30]/bestvideo[vcodec^=av01][height>=144][fps>30]/bestvideo[vcodec^=vp9.2][height>=144][fps>30]/bestvideo[vcodec^=vp9][height>=144][fps>30]/bestvideo[height>=144][fps>30]/bestvideo[vcodec^=avc1][height>=144]/bestvideo[vcodec^=av01][height>=144]/bestvideo[vcodec^=vp9.2][height>=144]/bestvideo[vcodec^=vp9][height>=144]/bestvideo[height>=144]/bestvideo)+(bestaudio[acodec^=opus]/bestaudio)/best"
