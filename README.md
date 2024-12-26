@@ -4,9 +4,7 @@
 
 Based on [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts), this project focuses on archiving.
 
-Added downloading comments in everything, added downloading all subtitles (useful to search media by text), removed the watch scripts (use the original scripts for downloading specifically to watch, or surf multimedia sites with something like [TarTube](https://github.com/axcore/tartube)), simplified the directory structure.
-
-The recent scripts uses same sources as the archivist scripts.
+Added downloading comments in everything, added downloading all subtitles (useful to search media by text), simplified the directory structure. The recent scripts uses same sources as the archivist scripts.
 
 ## Features:
 
@@ -93,3 +91,6 @@ Done.
 
 - [ZeroNet](https://zeronet.dev)
 
+- [MiceWeb](https://miceweb.net)
+
+- [TarTube](https://github.com/axcore/tartube)
