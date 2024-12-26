@@ -65,7 +65,7 @@ enter_recent() {
 }
 
 ytdlp_recent() {
-	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 2 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --write-playlist-metafiles --write-url-link --get-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --dateafter "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "../$FN" 2>&1 | tee output.log
+	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 2 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --check-formats --concurrent-fragments 3 --write-playlist-metafiles --write-url-link --get-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --dateafter "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "../$FN" 2>&1 | tee output.log
 }
 
 ytdlp_media() {
@@ -75,7 +75,7 @@ ytdlp_media() {
 			rm archive.log
 		fi
 	fi
-	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive_media.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --write-playlist-metafiles --write-url-link --no-write-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --datebefore "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output_media.log
+	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive_media.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --check-formats --concurrent-fragments 3 --write-playlist-metafiles --write-url-link --no-write-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --datebefore "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output_media.log
 }
 
 ytdlp_comments() {
