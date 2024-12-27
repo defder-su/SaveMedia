@@ -57,29 +57,34 @@ enter_recent() {
 		fi
 	fi
 	cd Recent
-	echo "Optimizing archive..."
-	cat ../archive_media.log >> archive.log
-	awk '!a[$0]++' archive.log > ~archive.log
-	mv ~archive.log archive.log
-	echo "Saving recent videos..."
+	if [ -f "../archive_media.log" ]; then
+		echo "Optimizing archive..."
+		cat ../archive_media.log >> archive.log
+		awk '!a[$0]++' archive.log > ~archive.log
+		mv ~archive.log archive.log
+	fi
 }
 
 ytdlp_recent() {
-	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 2 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --check-formats --concurrent-fragments 3 --write-playlist-metafiles --write-url-link --get-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --dateafter "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "../$FN" 2>&1 | tee output.log
+	enter_recent
+	echo "Saving recent videos..."
+	yt-dlp --format "$1" $UNI --continue --skip-unavailable-fragments --download-archive archive.log --add-metadata --write-description --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --write-playlist-metafiles --write-url-link --get-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --dateafter "$PERL_DATE" --batch-file "../$FN" "$3" --proxy "$PROXY" 2>&1 | tee output.log
 }
 
 ytdlp_media() {
+	echo "Saving non-recent videos..."
 	if [ -f "archive.log" ]; then
 		if cat archive.log >> archive_media.log; then
 			cat archive.log >> archive_comments.log
 			rm archive.log
 		fi
 	fi
-	yt-dlp --format "$1" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive_media.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --check-formats --concurrent-fragments 3 --write-playlist-metafiles --write-url-link --no-write-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --datebefore "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output_media.log
+	yt-dlp --format "$1" $UNI --continue --no-skip-unavailable-fragments --download-archive archive_media.log --add-metadata --write-description --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --embed-subs --write-playlist-metafiles --write-url-link --no-write-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --datebefore "$PERL_DATE" --batch-file "$FN" "$3" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 
 ytdlp_comments() {
-	yt-dlp --skip-download --no-simulate --force-write-archive --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --continue --no-overwrites --download-archive archive_comments.log --write-info-json --write-comments --match-filter "!is_live & !live" --output "$1" --datebefore "$PERL_DATE" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output_comments.log
+	echo "Saving non-recent comments..."
+	yt-dlp --skip-download --no-simulate --force-write-archive $UNI --download-archive archive_comments.log --write-comments --match-filter "!is_live & !live" --output "$1" --datebefore "$PERL_DATE" --batch-file "$FN" "$2" --proxy "$PROXY" 2>&1 | tee output_comments.log
 }
 
 
@@ -89,6 +94,10 @@ if [ ! -s "$FN" ]; then
 	echo "Sources should be specified in the '$FN' file in separated strings"
 	exit
 fi
+
+PROXY="$1"
+
+UNI="--verbose --write-info-json --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-overwrites --check-formats --concurrent-fragments 3 --no-check-certificate --socket-timeout 10 --throttled-rate 50K"
 
 PERL_DATE=$(perl -e 'my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time - 30*86400); $year += 1900; $mon += 1; printf ("%04d%02d%02d", $year, $mon, $mday)')
 

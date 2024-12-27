@@ -2,6 +2,8 @@
 
 set -m
 
+#TODO: support proxy
+
 # Audio
 cd Audio
 cd Unique

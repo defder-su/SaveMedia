@@ -9,8 +9,8 @@ CMDDIR="$(cd "$(dirname "$0")" && pwd)"
 
 ytdlp_media "$FMTA" "%(uploader)s/$DNT/%(title).208s [%(id)s].%(ext)s"
 
-"$CMDDIR/save_recent"
+"$CMDDIR/save_recent" "$PROXY"
 
-"$CMDDIR/save_comments"
+"$CMDDIR/save_comments" "$PROXY"
 
 write_html

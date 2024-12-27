@@ -45,7 +45,7 @@ Put the folders `Channels`, `Playlists`, `Unique` and also `Audio` and `Preview`
 
 Add content to a 'Source - XXXXXX.txt', 'Audio - XXXXXX.txt' or 'Preview - XXXXXX.txt' file depending of what type of content you want to download (See the documentation to understand the differences).
 
-Open a terminal in the folder of the script you want to use and run `./save` (alternatively, run `cd scripts && ./save_all`).
+Open a terminal in the folder of the script you want to use and run `./save` or `./save <proxy>` (alternatively, run `cd scripts && ./save_all`).
 
 Done.
 
