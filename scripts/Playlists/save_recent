@@ -7,6 +7,6 @@ CMDDIR="$(cd "$(dirname "$0")" && pwd)"
 
 . "$CMDDIR/../shared"
 
-ytdlp_recent "$FMTA" "%(playlist)s/$DNT/%(title).208s [%(id)s].%(ext)s"
+ytdlp_recent_media_with_comments "%(playlist)s/$DNT/%(title).208s [%(id)s].%(ext)s"
 
 write_html

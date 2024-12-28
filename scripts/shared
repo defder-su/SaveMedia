@@ -1,4 +1,6 @@
-wget_url() {
+#Internal
+
+_wget_url() {
 	FN1="$1"
 	FD="$(dirname "$FN1")"
 	if ls "$FD/*.html" 2>/dev/null; then
@@ -30,23 +32,7 @@ wget_url() {
 		fi
 	fi
 }
-
-write_html() {
-	type -P wget &>/dev/null && ISINST=1 || ISINST=0
-	if [ $ISINST -eq 0 ]
-	then
-		>&2 echo "Error: can't write html because of wget is not installed"
-		return 127
-	fi
-	echo ""
-	IFS=$'\n'
-	for I in `find . -name "*.url"`
-	do
-		wget_url "$I"
-	done
-}
-
-enter_recent() {
+_enter_recent() {
 	if [ ! -d "Recent" ]; then
 		mkdir Recent
 		if [ ! -d "Recent" ]; then
@@ -64,44 +50,75 @@ enter_recent() {
 		mv ~archive.log archive.log
 	fi
 }
-
-ytdlp_recent() {
-	enter_recent
-	echo "Saving recent videos..."
-	yt-dlp --format "$1" $UNI --continue --skip-unavailable-fragments --download-archive archive.log $UNIMEDIA --get-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --dateafter "$PERL_DATE" --batch-file "../$FN" "$3" --proxy "$PROXY" 2>&1 | tee output.log
-}
-
-ytdlp_media() {
-	echo "Saving non-recent videos..."
+_split_archive() {
 	if [ -f "archive.log" ]; then
 		if cat archive.log >> archive_media.log; then
 			cat archive.log >> archive_comments.log
 			rm archive.log
 		fi
 	fi
-	yt-dlp --format "$1" $UNI --continue --no-skip-unavailable-fragments --download-archive archive_media.log $UNIMEDIA --no-write-comments --match-filter "!is_live & !live" --output "$2" --merge-output-format "mkv" --datebefore "$PERL_DATE" --batch-file "$FN" "$3" --proxy "$PROXY" 2>&1 | tee output_media.log
+}
+_ytdlp_comments() {
+	yt-dlp $UNI --skip-download --no-simulate --force-write-archive --download-archive archive_comments.log --write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_comments.log
 }
 
-ytdlp_comments() {
+
+#External
+
+write_html() {
+	type -P wget &>/dev/null && ISINST=1 || ISINST=0
+	if [ $ISINST -eq 0 ]
+	then
+		>&2 echo "Error: can't write html because of wget is not installed"
+		return 127
+	fi
+	echo ""
+	IFS=$'\n'
+	for I in `find . -name "*.url"`
+	do
+		_wget_url "$I"
+	done
+}
+ytdlp_recent_media_with_comments() {
+	_enter_recent
+	echo "Saving recent videos with comments..."
+	yt-dlp $UNI $UNIMEDIA $RECENT --format "$FMTA" --continue --merge-output-format mkv --embed-subs --skip-unavailable-fragments --download-archive archive.log --get-comments --match-filter "!is_live & !live" --output "$1" --batch-file "../$FN" "$2" --proxy "$PROXY" 2>&1 | tee output.log
+}
+ytdlp_nonrecent_media() {
+	echo "Saving non-recent videos..."
+	yt-dlp $UNI $UNIMEDIA $NONRECENT --format "$FMTA" --continue --merge-output-format mkv --embed-subs --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" --proxy "$PROXY" 2>&1 | tee output_media.log
+}
+ytdlp_nonrecent_comments() {
 	echo "Saving non-recent videos comments..."
-	yt-dlp --skip-download --no-simulate --force-write-archive $UNI --download-archive archive_comments.log --write-comments --match-filter "!is_live & !live" --output "$1" --datebefore "$PERL_DATE" --batch-file "$FN" "$2" --proxy "$PROXY" 2>&1 | tee output_comments.log
+	_ytdlp_comments "$1" "$2" $NONRECENT
+}
+ytdlp_all_comments() {
+	echo "Saving videos comments..."
+	_ytdlp_comments "$1" "$2"
+}
+ytdlp_preview() {
+	yt-dlp $UNI $UNIMEDIA --format "$FMTP" --continue --merge-output-format mp4 --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
+}
+ytdlp_audio() {
+	yt-dlp
 }
 
+
+#Execute
 
 set -m
-
 if [ ! -s "$FN" ]; then
 	echo "Sources should be specified in the '$FN' file in separated strings"
 	exit
 fi
+_split_archive
 
 PROXY="$1"
-
 UNI="--verbose --write-info-json --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-overwrites --check-formats --concurrent-fragments 3 --no-check-certificate --socket-timeout 10 --throttled-rate 50K"
-UNIMEDIA="--add-metadata --write-description --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs en,en.*,ru,ru.*,de,de.*,live_chat --embed-subs --write-playlist-metafiles --write-url-link"
-
+UNIMEDIA="--add-metadata --write-description --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs en,en.*,ru,ru.*,de,de.*,live_chat --write-playlist-metafiles --write-url-link"
 PERL_DATE=$(perl -e 'my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time - 30*86400); $year += 1900; $mon += 1; printf ("%04d%02d%02d", $year, $mon, $mday)')
-
+RECENT="--dateafter $PERL_DATE"
+NONRECENT="--datebefore $PERL_DATE"
 DNT="%(title).32s - %(uploader).104s - %(upload_date)s"
-
 FMTA="(bestvideo[vcodec^=av01][height>=4320][fps>30]/bestvideo[vcodec^=vp9.2][height>=4320][fps>30]/bestvideo[vcodec^=vp9][height>=4320][fps>30]/bestvideo[vcodec^=avc1][height>=4320][fps>30]/bestvideo[height>=4320][fps>30]/bestvideo[vcodec^=av01][height>=4320]/bestvideo[vcodec^=vp9.2][height>=4320]/bestvideo[vcodec^=vp9][height>=4320]/bestvideo[vcodec^=avc1][height>=4320]/bestvideo[height>=4320]/bestvideo[vcodec^=av01][height>=2880][fps>30]/bestvideo[vcodec^=vp9.2][height>=2880][fps>30]/bestvideo[vcodec^=vp9][height>=2880][fps>30]/bestvideo[vcodec^=avc1][height>=2880][fps>30]/bestvideo[height>=2880][fps>30]/bestvideo[vcodec^=av01][height>=2880]/bestvideo[vcodec^=vp9.2][height>=2880]/bestvideo[vcodec^=vp9][height>=2880]/bestvideo[vcodec^=avc1][height>=2880]/bestvideo[height>=2880]/bestvideo[vcodec^=av01][height>=2160][fps>30]/bestvideo[vcodec^=vp9.2][height>=2160][fps>30]/bestvideo[vcodec^=vp9][height>=2160][fps>30]/bestvideo[vcodec^=avc1][height>=2160][fps>30]/bestvideo[height>=2160][fps>30]/bestvideo[vcodec^=av01][height>=2160]/bestvideo[vcodec^=vp9.2][height>=2160]/bestvideo[vcodec^=vp9][height>=2160]/bestvideo[vcodec^=avc1][height>=2160]/bestvideo[height>=2160]/bestvideo[vcodec^=av01][height>=1440][fps>30]/bestvideo[vcodec^=vp9.2][height>=1440][fps>30]/bestvideo[vcodec^=vp9][height>=1440][fps>30]/bestvideo[vcodec^=avc1][height>=1440][fps>30]/bestvideo[height>=1440][fps>30]/bestvideo[vcodec^=av01][height>=1440]/bestvideo[vcodec^=vp9.2][height>=1440]/bestvideo[vcodec^=vp9][height>=1440]/bestvideo[vcodec^=avc1][height>=1440]/bestvideo[height>=1440]/bestvideo[vcodec^=av01][height>=1080][fps>30]/bestvideo[vcodec^=vp9.2][height>=1080][fps>30]/bestvideo[vcodec^=vp9][height>=1080][fps>30]/bestvideo[vcodec^=avc1][height>=1080][fps>30]/bestvideo[height>=1080][fps>30]/bestvideo[vcodec^=av01][height>=1080]/bestvideo[vcodec^=vp9.2][height>=1080]/bestvideo[vcodec^=vp9][height>=1080]/bestvideo[vcodec^=avc1][height>=1080]/bestvideo[height>=1080]/bestvideo[vcodec^=av01][height>=720][fps>30]/bestvideo[vcodec^=vp9.2][height>=720][fps>30]/bestvideo[vcodec^=vp9][height>=720][fps>30]/bestvideo[vcodec^=avc1][height>=720][fps>30]/bestvideo[height>=720][fps>30]/bestvideo[vcodec^=av01][height>=720]/bestvideo[vcodec^=vp9.2][height>=720]/bestvideo[vcodec^=vp9][height>=720]/bestvideo[vcodec^=avc1][height>=720]/bestvideo[height>=720]/bestvideo[vcodec^=av01][height>=480][fps>30]/bestvideo[vcodec^=vp9.2][height>=480][fps>30]/bestvideo[vcodec^=vp9][height>=480][fps>30]/bestvideo[vcodec^=avc1][height>=480][fps>30]/bestvideo[height>=480][fps>30]/bestvideo[vcodec^=av01][height>=480]/bestvideo[vcodec^=vp9.2][height>=480]/bestvideo[vcodec^=vp9][height>=480]/bestvideo[vcodec^=avc1][height>=480]/bestvideo[height>=480]/bestvideo[vcodec^=av01][height>=360][fps>30]/bestvideo[vcodec^=vp9.2][height>=360][fps>30]/bestvideo[vcodec^=vp9][height>=360][fps>30]/bestvideo[vcodec^=avc1][height>=360][fps>30]/bestvideo[height>=360][fps>30]/bestvideo[vcodec^=av01][height>=360]/bestvideo[vcodec^=vp9.2][height>=360]/bestvideo[vcodec^=vp9][height>=360]/bestvideo[vcodec^=avc1][height>=360]/bestvideo[height>=360]/bestvideo[vcodec^=avc1][height>=240][fps>30]/bestvideo[vcodec^=av01][height>=240][fps>30]/bestvideo[vcodec^=vp9.2][height>=240][fps>30]/bestvideo[vcodec^=vp9][height>=240][fps>30]/bestvideo[height>=240][fps>30]/bestvideo[vcodec^=avc1][height>=240]/bestvideo[vcodec^=av01][height>=240]/bestvideo[vcodec^=vp9.2][height>=240]/bestvideo[vcodec^=vp9][height>=240]/bestvideo[height>=240]/bestvideo[vcodec^=avc1][height>=144][fps>30]/bestvideo[vcodec^=av01][height>=144][fps>30]/bestvideo[vcodec^=vp9.2][height>=144][fps>30]/bestvideo[vcodec^=vp9][height>=144][fps>30]/bestvideo[height>=144][fps>30]/bestvideo[vcodec^=avc1][height>=144]/bestvideo[vcodec^=av01][height>=144]/bestvideo[vcodec^=vp9.2][height>=144]/bestvideo[vcodec^=vp9][height>=144]/bestvideo[height>=144]/bestvideo)+(bestaudio[acodec^=opus]/bestaudio)/best"
+FMTP="bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b"

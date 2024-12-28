@@ -7,4 +7,4 @@ CMDDIR="$(cd "$(dirname "$0")" && pwd)"
 
 . "$CMDDIR/../shared"
 
-ytdlp_comments "%(playlist)s/$DNT/%(title).208s [%(id)s].comments.%(ext)s"
+ytdlp_nonrecent_comments "%(playlist)s/$DNT/%(title).208s [%(id)s].comments.%(ext)s"
