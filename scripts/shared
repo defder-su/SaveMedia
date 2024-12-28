@@ -104,7 +104,7 @@ ytdlp_preview() {
 	yt-dlp $UNI $UNIMEDIA --format "$FMTPRE" --continue --merge-output-format mp4 --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 ytdlp_audio() {
-	yt-dlp $UNI $UNIMEDIA --format "$FMTAUD" --no-continue --download-archive archive_media.log --extract-audio --audio-quality 0 --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
+	yt-dlp $UNI $UNIMEDIA --format "$FMTAUD" --no-continue --no-skip-unavailable-fragments --download-archive archive_media.log --extract-audio --audio-quality 0 --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 
 
