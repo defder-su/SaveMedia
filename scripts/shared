@@ -86,11 +86,11 @@ write_html() {
 ytdlp_recent_media_with_comments() {
 	_enter_recent
 	echo "Saving recent videos with comments..."
-	yt-dlp $UNI $UNIMEDIA $RECENT --format "$FMTARC" --continue --merge-output-format mkv --embed-subs --skip-unavailable-fragments --download-archive archive.log --get-comments --match-filter "!is_live & !live" --output "$1" --batch-file "../$FN" "$2" --proxy "$PROXY" 2>&1 | tee output.log
+	yt-dlp $UNI $UNIMEDIA $RECENT --format "$FMTARC" --continue --merge-output-format mkv --add-metadata --embed-subs --skip-unavailable-fragments --download-archive archive.log --get-comments --match-filter "!is_live & !live" --output "$1" --batch-file "../$FN" "$2" --proxy "$PROXY" 2>&1 | tee output.log
 }
 ytdlp_nonrecent_media() {
 	echo "Saving non-recent videos..."
-	yt-dlp $UNI $UNIMEDIA $NONRECENT --format "$FMTARC" --continue --merge-output-format mkv --embed-subs --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" --proxy "$PROXY" 2>&1 | tee output_media.log
+	yt-dlp $UNI $UNIMEDIA $NONRECENT --format "$FMTARC" --continue --merge-output-format mkv --add-metadata --embed-subs --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 ytdlp_nonrecent_comments() {
 	echo "Saving non-recent videos comments..."
@@ -101,7 +101,7 @@ ytdlp_all_comments() {
 	_ytdlp_comments "$1" "$2"
 }
 ytdlp_preview() {
-	yt-dlp $UNI $UNIMEDIA --format "$FMTPRE" --continue --merge-output-format mp4 --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
+	yt-dlp $UNI $UNIMEDIA --format "$FMTPRE" --continue --merge-output-format mp4 --embed-chapters --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 ytdlp_audio() {
 	yt-dlp $UNI $UNIMEDIA --format "$FMTAUD" --no-continue --no-skip-unavailable-fragments --download-archive archive_media.log --extract-audio --audio-quality 0 --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
@@ -119,7 +119,7 @@ _split_archive
 
 PROXY="$1"
 UNI="--verbose --write-info-json --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-overwrites --check-formats --concurrent-fragments 3 --no-check-certificate --socket-timeout 10 --throttled-rate 50K"
-UNIMEDIA="--add-metadata --write-description --write-annotations --write-thumbnail --embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs en,en.*,ru,ru.*,de,de.*,live_chat --write-playlist-metafiles --write-url-link"
+UNIMEDIA="--write-description --write-annotations --write-thumbnail --no-embed-thumbnail --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs en,en.*,ru,ru.*,de,de.*,live_chat --write-playlist-metafiles --write-url-link"
 PERL_DATE=$(perl -e 'my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time - 30*86400); $year += 1900; $mon += 1; printf ("%04d%02d%02d", $year, $mon, $mday)')
 RECENT="--dateafter $PERL_DATE"
 NONRECENT="--datebefore $PERL_DATE"
