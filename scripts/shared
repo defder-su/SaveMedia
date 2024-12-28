@@ -28,7 +28,7 @@ _wget_url() {
 			RNUMBER=$((RANDOM%9+2))
 			echo "[html] Sleeping $RNUMBER seconds ..."
 			sleep $RNUMBER
-			wget "$URL" --output-document="$FN2"
+			wget "$URL" --output-document=- >"$FN2"
 		fi
 	fi
 }
@@ -72,12 +72,16 @@ write_html() {
 		>&2 echo "Error: can't write html because of wget is not installed"
 		return 127
 	fi
-	echo ""
-	IFS=$'\n'
-	for I in `find . -name "*.url"`
-	do
-		_wget_url "$I"
-	done
+	if [ -z "$PROXY" ]; then
+		echo "Saving htmls..."
+		IFS=$'\n'
+		for I in `find . -name "*.url"`
+		do
+			_wget_url "$I"
+		done
+	else
+		echo "Skipped saving htmls (not implemented with proxy)"
+	fi
 }
 ytdlp_recent_media_with_comments() {
 	_enter_recent
