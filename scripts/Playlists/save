@@ -4,13 +4,9 @@
 FN="Source - Playlists.txt"
 
 CMDDIR="$(cd "$(dirname "$0")" && pwd)"
-
 . "$CMDDIR/../shared"
 
 ytdlp_nonrecent_media "%(playlist)s/$DNT/%(title).208s [%(id)s].%(ext)s"
-
-"$CMDDIR/save_recent" "$PROXY"
-
-"$CMDDIR/save_comments" "$PROXY"
-
+ytdlp_recent_media_with_comments "%(playlist)s/$DNT/%(title).208s [%(id)s].%(ext)s"
+ytdlp_nonrecent_comments "%(playlist)s/$DNT/%(title).208s [%(id)s].comments.%(ext)s"
 write_html

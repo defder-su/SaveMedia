@@ -4,7 +4,6 @@
 FN="Source - Channels.txt"
 
 CMDDIR="$(cd "$(dirname "$0")" && pwd)"
-
 . "$CMDDIR/../shared"
 
 ytdlp_nonrecent_comments "%(uploader)s/$DNT/%(title).208s [%(id)s].comments.%(ext)s"

@@ -4,11 +4,8 @@
 FN="Preview - Playlists.txt"
 
 CMDDIR="$(cd "$(dirname "$0")" && pwd)"
-
 . "$CMDDIR/../../shared"
 
 ytdlp_preview "%(playlist)s/$DNT/%(title).208s [%(id)s].%(ext)s" --format-sort res~480
-
 ytdlp_all_comments "%(playlist)s/$DNT/%(title).208s [%(id)s].comments.%(ext)s"
-
 write_html

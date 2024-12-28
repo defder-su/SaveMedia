@@ -3,13 +3,9 @@
 
 FN="Audio - Channels.txt"
 
-if [ ! -s "$FN" ]; then
-    echo "Sources should be specified in the '$FN' file\n in separated strings"
-    exit
-fi
-
 CMDDIR="$(cd "$(dirname "$0")" && pwd)"
-FMT="(bestaudio[acodec^=opus]/bestaudio)/best"
-FNT="%(uploader)s/%(title).32s - %(uploader).104s - %(upload_date)s/%(title).208s [%(id)s].%(ext)s"
-yt-dlp --format "$FMT" --verbose --force-ipv4 --sleep-requests 1 --sleep-interval 5 --max-sleep-interval 30 --ignore-errors --no-continue --no-overwrites --download-archive archive.log --add-metadata --write-description --write-info-json --write-annotations --write-thumbnail --embed-thumbnail --write-playlist-metafiles --write-url-link --get-comments --write-sub --write-auto-sub --sleep-subtitles 10 --sub-langs "en,en.*,ru,ru.*,de,de.*,live_chat" --extract-audio --audio-quality 0 --match-filter "!is_live & !live" --output "$FNT" --no-check-certificate --socket-timeout 10 --throttled-rate 50K --batch-file "$FN" 2>&1 | tee output.log
-"$CMDDIR/../../write_html"
+. "$CMDDIR/../../shared"
+
+ytdlp_audio "%(uploader)s/$DNT/%(title).208s [%(id)s].%(ext)s"
+ytdlp_all_comments "%(uploader)s/$DNT/%(title).208s [%(id)s].comments.%(ext)s"
+write_html
