@@ -1,6 +1,6 @@
 #Internal
 
-_wget_url() {
+_curl_url() {
 	FN1="$1"
 	FD="$(dirname "$FN1")"
 	if ls "$FD/*.html" 2>/dev/null; then
@@ -28,7 +28,12 @@ _wget_url() {
 			RNUMBER=$((RANDOM%9+2))
 			echo "[html] Sleeping $RNUMBER seconds ..."
 			sleep $RNUMBER
-			wget "$URL" --output-document=- >"$FN2"
+			echo "[html] Downloading $URL"
+			if [ -z "$PROXY" ]; then
+				curl "$URL" >"$FN2"
+			else
+				curl -x "$PROXY" "$URL" >"$FN2"
+			fi
 		fi
 	fi
 }
@@ -72,16 +77,12 @@ write_html() {
 		>&2 echo "Error: can't write html because of wget is not installed"
 		return 127
 	fi
-	if [ -z "$PROXY" ]; then
-		echo "Saving htmls..."
-		IFS=$'\n'
-		for I in `find . -name "*.url"`
-		do
-			_wget_url "$I"
-		done
-	else
-		echo "Skipped saving htmls (not implemented with proxy)"
-	fi
+	echo "Saving htmls..."
+	IFS=$'\n'
+	for I in `find . -name "*.url"`
+	do
+		_curl_url "$I"
+	done
 }
 ytdlp_recent_media_with_comments() {
 	_enter_recent
