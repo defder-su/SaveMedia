@@ -111,6 +111,7 @@ ytdlp_audio() {
 #Execute
 
 set -m
+cd $CMDDIR
 if [ ! -s "$FN" ]; then
 	echo "Sources should be specified in the '$FN' file in separated strings"
 	exit

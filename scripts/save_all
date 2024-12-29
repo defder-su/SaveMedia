@@ -2,43 +2,22 @@
 
 set -m
 
-#TODO: support proxy
+CMDDIR="$(cd "$(dirname "$0")" && pwd)"
+PROXY="$1"
 
 # Audio
-cd Audio
-cd Unique
-./save
-cd ..
-cd Playlists
-./save
-cd ..
-cd Channels
-./save
-cd ..
-cd ..
+"$CMDDIR/Audio/Unique/save" "$PROXY"
+"$CMDDIR/Audio/Playlists/save" "$PROXY"
+"$CMDDIR/Audio/Channels/save" "$PROXY"
 
 # Preview
-cd Preview
-cd Unique
-./save
-cd ..
-cd Playlists
-./save
-cd ..
-cd Channels
-./save
-cd ..
-cd ..
+"$CMDDIR/Preview/Unique/save" "$PROXY"
+"$CMDDIR/Preview/Playlists/save" "$PROXY"
+"$CMDDIR/Preview/Channels/save" "$PROXY"
 
 # Archivist
-cd Unique
-./save
-cd ..
-cd Playlists
-./save
-cd ..
-cd Channels
-./save
-cd ..
+"$CMDDIR/Unique/save" "$PROXY"
+"$CMDDIR/Playlists/save" "$PROXY"
+"$CMDDIR/Channels/save" "$PROXY"
 
-echo "Done"
+echo "Congratulations! All media were processed"
