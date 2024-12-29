@@ -41,15 +41,15 @@ _enter_recent() {
 	if [ ! -d "Recent" ]; then
 		mkdir Recent
 		if [ ! -d "Recent" ]; then
-			echo "Can't create Recent directory"
+			echo "[SaveMedia] Can't create Recent directory"
 			exit
 		else
-			echo "Created Recent directory"
+			echo "[SaveMedia] Created Recent directory"
 		fi
 	fi
 	cd Recent
 	if [ -f "../archive_media.log" ]; then
-		echo "Optimizing archive..."
+		echo "[SaveMedia] Optimizing archive..."
 		cat ../archive_media.log >> archive.log
 		awk '!a[$0]++' archive.log > ~archive.log
 		mv ~archive.log archive.log
@@ -74,10 +74,10 @@ write_html() {
 	type -P wget &>/dev/null && ISINST=1 || ISINST=0
 	if [ $ISINST -eq 0 ]
 	then
-		>&2 echo "Error: can't write html because of wget is not installed"
+		>&2 echo "[SaveMedia] Error: can't write html because of wget is not installed"
 		return 127
 	fi
-	echo "Saving htmls..."
+	echo "[SaveMedia] Saving htmls..."
 	IFS=$'\n'
 	for I in `find . -name "*.url"`
 	do
@@ -86,25 +86,27 @@ write_html() {
 }
 ytdlp_recent_media_with_comments() {
 	_enter_recent
-	echo "Saving recent videos with comments..."
+	echo "[SaveMedia] Saving recent videos with comments..."
 	yt-dlp $UNI $UNIMEDIA $RECENT --format "$FMTARC" --continue --merge-output-format mkv --add-metadata --embed-subs --skip-unavailable-fragments --download-archive archive.log --get-comments --match-filter "!is_live & !live" --output "$1" --batch-file "../$FN" "$2" --proxy "$PROXY" 2>&1 | tee output.log
 }
 ytdlp_nonrecent_media() {
-	echo "Saving non-recent videos..."
+	echo "[SaveMedia] Saving non-recent videos..."
 	yt-dlp $UNI $UNIMEDIA $NONRECENT --format "$FMTARC" --continue --merge-output-format mkv --add-metadata --embed-subs --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 ytdlp_nonrecent_comments() {
-	echo "Saving non-recent videos comments..."
+	echo "[SaveMedia] Saving non-recent videos comments..."
 	_ytdlp_comments "$1" "$2" $NONRECENT
 }
 ytdlp_all_comments() {
-	echo "Saving videos comments..."
+	echo "[SaveMedia] Saving comments..."
 	_ytdlp_comments "$1" "$2"
 }
 ytdlp_preview() {
+	echo "[SaveMedia] Saving previews..."
 	yt-dlp $UNI $UNIMEDIA --format "$FMTPRE" --continue --merge-output-format mp4 --embed-chapters --no-skip-unavailable-fragments --download-archive archive_media.log --no-write-comments --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 ytdlp_audio() {
+	echo "[SaveMedia] Saving audio..."
 	yt-dlp $UNI $UNIMEDIA --format "$FMTAUD" --no-continue --no-skip-unavailable-fragments --download-archive archive_media.log --extract-audio --audio-quality 0 --match-filter "!is_live & !live" --output "$1" --batch-file "$FN" "$2" "$3" "$4" --proxy "$PROXY" 2>&1 | tee output_media.log
 }
 
@@ -114,7 +116,7 @@ ytdlp_audio() {
 set -m
 cd $CMDDIR
 if [ ! -s "$FN" ]; then
-	echo "Sources should be specified in the '$FN' file in separated strings"
+	echo "[SaveMedia] Sources should be specified in the '$FN' file in separated strings"
 	exit
 fi
 _split_archive
