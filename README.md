@@ -4,7 +4,7 @@
 
 Based on [TheFrenchGhostys-YouTube-DL-Archivist-Scripts](https://github.com/TheFrenchGhosty/TheFrenchGhostys-YouTube-DL-Archivist-Scripts), this project focuses on archiving.
 
-Added downloading comments in everything, added downloading all subtitles (useful to search media by text), simplified the directory structure. The recent scripts uses same sources as the archivist scripts.
+Added downloading comments in everything, added downloading all subtitles (useful to search media by text), simplified the directory structure. Refactored sources.
 
 ## Features:
 
